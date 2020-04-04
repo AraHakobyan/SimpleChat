@@ -1,4 +1,4 @@
-package am.simple.chat.app.chat.data
+package am.simple.chat.app.chat.data.network
 
 import am.simple.chat.app.chat.data.model.ChatResponseModel
 import am.simple.chat.core.constants.NetworkConstants

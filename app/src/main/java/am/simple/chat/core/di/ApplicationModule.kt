@@ -1,6 +1,6 @@
 package am.simple.chat.core.di
 
-import am.simple.chat.app.chat.data.ChatNetworkApi
+import am.simple.chat.app.chat.data.network.ChatNetworkApi
 import am.simple.chat.app.chat.data.ChatRepository
 import am.simple.chat.core.network.RetrofitClientInstance
 import com.google.gson.Gson
@@ -26,7 +26,7 @@ object ApplicationModule {
 
     private val repositoryModule = module {
         single {
-            ChatRepository( get())
+            ChatRepository(get())
         }
     }
 
