@@ -30,7 +30,6 @@ android {
     androidExtensions {
         experimental = true
     }
-
 }
 
 ext {
@@ -48,7 +47,7 @@ ext {
     v_squareup = "2.3.0"
     v_squareup_logging = "4.2.0"
     v_scalars = "2.1.0"
-    room_version = "2.2.4"
+    room_version = "2.2.5"
 }
 
 dependencies {
