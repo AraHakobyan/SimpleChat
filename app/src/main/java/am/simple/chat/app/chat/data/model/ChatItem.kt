@@ -1,5 +1,6 @@
 package am.simple.chat.app.chat.data.model
 
+import am.simple.chat.core.utils.EMPTY
 import android.os.Parcelable
 import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
@@ -18,4 +19,6 @@ data class ChatItem(
     val message: String,
     @SerializedName("userId")
     val userId: Int
-): Parcelable
+): Parcelable {
+    constructor(chatItem: SendTestMessageModel): this(id = EMPTY, message = chatItem.message, userId = chatItem.userId)
+}

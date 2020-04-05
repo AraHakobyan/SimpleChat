@@ -16,5 +16,5 @@ data class ErrorModel(
     val code: String,
 
     @SerializedName("message")
-    val message: String?
+    val message: String? = null
 ): Parcelable

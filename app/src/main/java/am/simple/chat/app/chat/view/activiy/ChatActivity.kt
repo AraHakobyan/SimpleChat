@@ -8,7 +8,7 @@ import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 class ChatActivity : BaseActivity<ChatActivityViewModel>() {
 
-    override fun onCreateView(): Int? = R.layout.activity_chat
+    override fun onCreateView(): Int = R.layout.activity_chat
 
     override fun initActivityViewModel() {
         viewModel = getViewModel()

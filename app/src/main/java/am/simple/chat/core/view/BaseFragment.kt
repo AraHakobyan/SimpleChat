@@ -42,6 +42,7 @@ abstract class BaseFragment<F : ViewModel, A : ViewModel> : Fragment() {
         initActivityViewModel()
         initActivityObservers()
         initFragmentObservers()
+        initSocketConnection()
     }
 
     override fun onCreateView(
@@ -93,4 +94,6 @@ abstract class BaseFragment<F : ViewModel, A : ViewModel> : Fragment() {
     open fun initActivityObservers() = Unit
 
     open fun initFragmentObservers() = Unit
+
+    abstract fun initSocketConnection()
 }

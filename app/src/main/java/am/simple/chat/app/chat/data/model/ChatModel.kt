@@ -13,7 +13,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class ChatModel(
     @SerializedName("items")
-    val items: List<ChatItem>,
+    val items: ArrayList<ChatItem>,
 
     @SerializedName("count")
     val count: Int

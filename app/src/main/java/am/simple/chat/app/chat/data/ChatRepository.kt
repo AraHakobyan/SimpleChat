@@ -1,6 +1,8 @@
 package am.simple.chat.app.chat.data
 
 import am.simple.chat.app.chat.data.network.ChatNetworkApi
+import am.simple.chat.core.data.type.SocketConnectionType
+import androidx.lifecycle.MutableLiveData
 import com.microsoft.signalr.HubConnection
 
 /**
@@ -14,22 +16,13 @@ class ChatRepository(
 
     suspend fun getMessages() = chatApi.getMessages()
 
-
-//    suspend fun sendMessage(model: SendTestMessageModel) {
-//        hubConnection.invoke("OnMessage", model)
-//    }
-//
-//    suspend fun receiveMessage(model: OnReceivedTestModel) {
-//        hubConnection.invoke("OnReceived",model)
-//    }
-
-    fun onStartSocketConnection() {
-        initHubConnection()
-        hubConnection.start()
+    fun onStartSocketConnection(socketConnectionLiveData: MutableLiveData<@SocketConnectionType Int>) {
+        initHubConnection(socketConnectionLiveData)
+        openConnection()
     }
 
     fun onCloseSocketConnection() {
-        hubConnection.stop()
+        closeConnection()
     }
 
 }
