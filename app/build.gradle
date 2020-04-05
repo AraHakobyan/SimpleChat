@@ -14,6 +14,8 @@ android {
         versionCode 1
         versionName "1.0"
 
+        multiDexEnabled = true
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -49,12 +51,13 @@ ext {
     v_test_runner = "1.2.0"
     v_koin = "2.0.1"
     v_corotines = "1.2.1"
-    v_squareup = "2.3.0"
+    v_squareup = "2.6.2"
     v_squareup_logging = "4.2.0"
     v_scalars = "2.1.0"
     room_version = "2.2.5"
     v_coroutines = "1.3.0"
     v_signalr = "5.0.0-preview.1.20124.5"
+    v_multidex = "2.0.1"
 }
 
 dependencies {
@@ -90,4 +93,7 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$v_coroutines}"
 
     implementation "com.microsoft.signalr:signalr:$v_signalr"
+    implementation 'org.slf4j:slf4j-jdk14:1.7.25'
+    implementation 'org.conscrypt:conscrypt-android:2.2.1'
+    implementation("androidx.multidex:multidex:$v_multidex")
 }

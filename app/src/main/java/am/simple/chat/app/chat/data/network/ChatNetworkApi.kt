@@ -13,8 +13,7 @@ import retrofit2.http.Headers
  */
 interface ChatNetworkApi {
     @Headers(
-        "Accept: application/json",
-        "v=1.0"
+       "Content-Type: application/json;v=1.0"
     )
     @GET(NetworkConstants.GET_MESSAGES)
     suspend fun getMessages(): Response<ResponseModel<ChatModel>>

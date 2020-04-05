@@ -1,7 +1,6 @@
 package am.simple.chat.app.chat.view.fragment
 
 import am.simple.chat.R
-import am.simple.chat.app.chat.data.model.ChatModel
 import am.simple.chat.app.chat.view.activiy.ChatActivityViewModel
 import am.simple.chat.core.network.Output
 import am.simple.chat.core.view.BaseFragment
@@ -26,22 +25,28 @@ class ChatFragment : BaseFragment<ChatFragmentViewModel, ChatActivityViewModel>(
     }
 
     override fun setupView() {
+        getMessages()
     }
 
     override fun setupOnViewClicked() {
-        getMessagesBtn.setOnClickListener(::getMessages)
+        btnSendMessage.setOnClickListener(::sendMessage)
     }
 
-    private fun getMessages(view: View? = null) {
+    private fun getMessages() {
         fragmentViewModel.getMessages().observe(this, Observer {
             when(it){
-                is Output.Success ->showMessages(it.output.data)
+                is Output.Success ->showMessages(it)
                 is Output.Error -> showErrorDialog(it.exception.message!!)
             }
         })
     }
 
-    private fun showMessages(data: ChatModel) {
+    private fun sendMessage(view: View? = null) {
+//        fragmentViewModel.startSocket()
+
+    }
+
+    private fun showMessages(data: Output<Any>) {
 
     }
 }

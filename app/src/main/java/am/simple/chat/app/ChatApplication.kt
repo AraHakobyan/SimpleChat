@@ -1,7 +1,7 @@
 package am.simple.chat.app
 
 import am.simple.chat.core.di.ApplicationModule
-import android.app.Application
+import androidx.multidex.MultiDexApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -10,7 +10,7 @@ import org.koin.core.context.startKoin
  * Created by Ara Hakobyan on 4/4/2020.
  * Company IDT
  */
-class ChatApplication : Application() {
+class ChatApplication : MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()

@@ -16,13 +16,13 @@ object RetrofitClientInstance {
 
     private var retrofit: Retrofit? = null
 
-    private var TIMEOUT_MINUTES: Long = 2
+    private var TIMEOUT_MINUTES: Long = 30
 
     private val client: OkHttpClient =
         OkHttpClient.Builder()
-            .readTimeout(TIMEOUT_MINUTES, TimeUnit.MINUTES)
-            .connectTimeout(TIMEOUT_MINUTES, TimeUnit.MINUTES)
-            .writeTimeout(TIMEOUT_MINUTES, TimeUnit.MINUTES)
+            .readTimeout(TIMEOUT_MINUTES, TimeUnit.SECONDS)
+            .connectTimeout(TIMEOUT_MINUTES, TimeUnit.SECONDS)
+            .writeTimeout(TIMEOUT_MINUTES, TimeUnit.SECONDS)
             .addInterceptor(HttpLoggingInterceptor().apply {
                 level =  HttpLoggingInterceptor.Level.BODY
             }).build()

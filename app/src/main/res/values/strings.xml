@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">SimpleChat</string>
     <string name="messages">Messages</string>
+    <string name="hint_new_message">New message</string>
 </resources>

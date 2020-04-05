@@ -27,9 +27,13 @@ object ApplicationModule {
     }
 
     private val apiModule = module {
-        factory {
-            val retrofitClientInstance: Retrofit = get()
-            retrofitClientInstance.create(ChatNetworkApi::class.java)
+
+        fun provideChatNetworkApi(retrofit: Retrofit): ChatNetworkApi {
+            return retrofit.create(ChatNetworkApi::class.java)
+        }
+
+        single {
+            provideChatNetworkApi(get())
         }
     }
 
