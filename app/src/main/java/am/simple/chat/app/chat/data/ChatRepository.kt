@@ -8,4 +8,6 @@ import am.simple.chat.app.chat.data.network.ChatNetworkApi
  */
 class ChatRepository(private val chatApi: ChatNetworkApi) {
 
+    suspend fun getMessages() = chatApi.getMessages()
+
 }

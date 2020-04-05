@@ -2,8 +2,12 @@ package am.simple.chat.core.di
 
 import am.simple.chat.app.chat.data.network.ChatNetworkApi
 import am.simple.chat.app.chat.data.ChatRepository
+import am.simple.chat.app.chat.view.activiy.ChatActivityViewModel
+import am.simple.chat.app.chat.view.fragment.ChatFragmentViewModel
 import am.simple.chat.core.network.RetrofitClientInstance
 import com.google.gson.Gson
+import org.koin.android.ext.koin.androidContext
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
 
@@ -31,7 +35,12 @@ object ApplicationModule {
     }
 
     private val viewModelModule = module {
-
+        viewModel {
+            ChatActivityViewModel( androidContext())
+        }
+        viewModel {
+            ChatFragmentViewModel(get(), androidContext())
+        }
     }
 
     private val gsonModule = module {

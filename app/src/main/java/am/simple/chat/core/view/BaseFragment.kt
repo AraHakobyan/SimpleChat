@@ -58,17 +58,21 @@ abstract class BaseFragment<F : ViewModel, A : ViewModel> : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (fragmentWasCreated.not()) {
-            GlobalScope.launch(Dispatchers.IO) { loadData() }
+            loadData()
             setupView()
             setupOnViewClicked()
         }
         fragmentWasCreated = true
-        fragmentView.run {  }
+        fragmentView.run { }
     }
 
     override fun setUserVisibleHint(isVisible: Boolean) {
         super.setUserVisibleHint(isVisible)
         isVisibleToUser = isVisible
+    }
+
+    protected fun showErrorDialog(message: String) {
+
     }
 
     @LayoutRes
@@ -84,7 +88,7 @@ abstract class BaseFragment<F : ViewModel, A : ViewModel> : Fragment() {
 
     open fun loadIntentExtras() = Unit
 
-    open suspend fun loadData() = Unit
+    open fun loadData() = Unit
 
     open fun initActivityObservers() = Unit
 
