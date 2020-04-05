@@ -5,7 +5,9 @@ import am.simple.chat.app.chat.data.model.ChatModel
 import am.simple.chat.app.chat.view.activiy.ChatActivityViewModel
 import am.simple.chat.core.network.Output
 import am.simple.chat.core.view.BaseFragment
+import android.view.View
 import androidx.lifecycle.Observer
+import kotlinx.android.synthetic.main.fragment_chat.*
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 /**
@@ -24,10 +26,13 @@ class ChatFragment : BaseFragment<ChatFragmentViewModel, ChatActivityViewModel>(
     }
 
     override fun setupView() {
-
     }
 
-    override fun loadData() {
+    override fun setupOnViewClicked() {
+        getMessagesBtn.setOnClickListener(::getMessages)
+    }
+
+    private fun getMessages(view: View? = null) {
         fragmentViewModel.getMessages().observe(this, Observer {
             when(it){
                 is Output.Success ->showMessages(it.output.data)

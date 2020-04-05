@@ -12,4 +12,8 @@ class ChatFragmentViewModel(private val repository: ChatRepository,context: Cont
 
     fun getMessages() = executeBackendCall(call = { repository.getMessages() })
 
+    override fun onCleared() {
+        repository.onCloseSocketConnection()
+        super.onCleared()
+    }
 }

@@ -24,7 +24,7 @@ object RetrofitClientInstance {
             .connectTimeout(TIMEOUT_MINUTES, TimeUnit.MINUTES)
             .writeTimeout(TIMEOUT_MINUTES, TimeUnit.MINUTES)
             .addInterceptor(HttpLoggingInterceptor().apply {
-//                level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
+                level =  HttpLoggingInterceptor.Level.BODY
             }).build()
 
     val retrofitInstance: Retrofit

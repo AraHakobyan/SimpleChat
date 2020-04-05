@@ -17,8 +17,4 @@ class ChatActivity : BaseActivity<ChatActivityViewModel>() {
     override fun setupView() {
 
     }
-
-    override fun loadData() {
-
-    }
 }

@@ -5,6 +5,7 @@ import am.simple.chat.app.chat.data.ChatRepository
 import am.simple.chat.app.chat.view.activiy.ChatActivityViewModel
 import am.simple.chat.app.chat.view.fragment.ChatFragmentViewModel
 import am.simple.chat.core.network.RetrofitClientInstance
+import am.simple.chat.core.network.SocketClientInstance
 import com.google.gson.Gson
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -21,6 +22,10 @@ object ApplicationModule {
         single { RetrofitClientInstance.retrofitInstance }
     }
 
+    private val signalRModule = module {
+        single { SocketClientInstance.hubConnectionInstance }
+    }
+
     private val apiModule = module {
         factory {
             val retrofitClientInstance: Retrofit = get()
@@ -30,13 +35,13 @@ object ApplicationModule {
 
     private val repositoryModule = module {
         single {
-            ChatRepository(get())
+            ChatRepository(get(), get())
         }
     }
 
     private val viewModelModule = module {
         viewModel {
-            ChatActivityViewModel( androidContext())
+            ChatActivityViewModel(androidContext())
         }
         viewModel {
             ChatFragmentViewModel(get(), androidContext())
@@ -49,5 +54,12 @@ object ApplicationModule {
         }
     }
 
-    val modules = listOf(retrofitModule, apiModule, repositoryModule, viewModelModule, gsonModule)
+    val modules = listOf(
+        retrofitModule,
+        signalRModule,
+        apiModule,
+        repositoryModule,
+        viewModelModule,
+        gsonModule
+    )
 }

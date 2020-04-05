@@ -4,15 +4,12 @@ import android.os.Bundle
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 /**
  * Created by Ara Hakobyan on 4/4/2020.
  * Company IDT
  */
-abstract class BaseActivity<ACTIVITY_VIEW_MODEL: ViewModel> : AppCompatActivity() {
+abstract class BaseActivity<ACTIVITY_VIEW_MODEL : ViewModel> : AppCompatActivity() {
 
     protected lateinit var viewModel: ACTIVITY_VIEW_MODEL
 
@@ -21,9 +18,7 @@ abstract class BaseActivity<ACTIVITY_VIEW_MODEL: ViewModel> : AppCompatActivity(
         initObservers()
         super.onCreate(savedInstanceState)
         loadIntentExtras()
-        GlobalScope.launch(Dispatchers.IO) {
-            loadData()
-        }
+        loadData()
         onCreateView()?.let {
             setContentView(it)
             setupView()
@@ -37,7 +32,7 @@ abstract class BaseActivity<ACTIVITY_VIEW_MODEL: ViewModel> : AppCompatActivity(
 
     abstract fun setupView()
 
-    open fun initObservers()= Unit
+    open fun initObservers() = Unit
 
     open fun loadIntentExtras() = Unit
 
