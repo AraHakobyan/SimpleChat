@@ -1,12 +1,13 @@
 package am.simple.chat.core.view
 
 import am.simple.chat.app.ChatApplication
+import am.simple.chat.core.data.model.ErrorModel
 import am.simple.chat.core.data.type.ErrorType
+import am.simple.chat.core.data.type.ErrorType.Companion.ERROR_TYPE_UNDEFINED
 import am.simple.chat.core.network.Output
 import am.simple.chat.core.utils.hasInternetConnection
 import kotlinx.coroutines.Dispatchers
 import retrofit2.Response
-import java.io.IOException
 import java.lang.Exception
 import androidx.lifecycle.*
 
@@ -23,10 +24,10 @@ open class BaseViewModel(private val context: ChatApplication) : AndroidViewMode
                 val result: Output<T> = safeApiResult(call)
                 emit(result)
             } else {
-                emit(Output.Error(IOException(ErrorType.ERROR_TYPE_NO_INTERNET_CONNECTION)))
+                emit(Output.Error(ErrorModel(ErrorType.ERROR_TYPE_NO_INTERNET_CONNECTION)))
             }
         } catch (e: Exception) {
-            emit(Output.Error(IOException(ErrorType.ERROR_TYPE_FAIL_RESPONSE)))
+            emit(Output.Error(ErrorModel(ErrorType.ERROR_TYPE_FAIL_RESPONSE)))
         }
     }
 
@@ -36,9 +37,9 @@ open class BaseViewModel(private val context: ChatApplication) : AndroidViewMode
             return when (val responseBody = response.body()) {
                 is T -> Output.Success(responseBody)
 
-                else -> Output.Error(IOException())
+                else -> Output.Error(ErrorModel(ERROR_TYPE_UNDEFINED))
             }
         }
-        return Output.Error(IOException())
+        return Output.Error(ErrorModel(ERROR_TYPE_UNDEFINED))
     }
 }

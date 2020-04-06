@@ -1,5 +1,6 @@
 package am.simple.chat.core.network
 
+import am.simple.chat.core.data.model.ErrorModel
 import androidx.annotation.Keep
 
 /**
@@ -12,5 +13,5 @@ sealed class Output<out T : Any> {
     data class Success<out T : Any>(val output: T) : Output<T>()
 
     @Keep
-    data class Error(val exception: Exception) : Output<Nothing>()
+    data class Error(val errorModel: ErrorModel) : Output<Nothing>()
 }

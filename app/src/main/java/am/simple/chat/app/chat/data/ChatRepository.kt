@@ -1,9 +1,9 @@
 package am.simple.chat.app.chat.data
 
-import am.simple.chat.app.chat.data.model.SendTestMessageModel
+import am.simple.chat.app.chat.data.model.ChatItem
 import am.simple.chat.app.chat.data.network.ChatNetworkApi
-import android.util.Log
-import com.microsoft.signalr.Action
+import am.simple.chat.core.data.type.SocketConnectionType
+import androidx.lifecycle.MutableLiveData
 import com.microsoft.signalr.HubConnection
 
 /**
@@ -12,42 +12,20 @@ import com.microsoft.signalr.HubConnection
  */
 class ChatRepository(
     private val chatApi: ChatNetworkApi,
-    private val hubConnection: HubConnection
-) {
-
-    init {
-        initHubConnection()
-        onStartSocketConnection()
-    }
+    hubConnection: HubConnection
+) : SocketRepository(hubConnection){
 
     suspend fun getMessages() = chatApi.getMessages()
 
-    private fun initHubConnection() {
-        hubConnection.run {
-           val b = on("OnConnected", Action {
-                Log.d("Socket1111", "OnConnected")
-            })
-            Log.d("Socket1111", "b = $b")
-            on("OnMessage",Action {
-                Log.d("Socket1111", "OnMessage")
-            })
-            on("OnReceived", Action {
-                Log.d("Socket1111", "OnReceived")
-            })
-        }
-
-    }
-
-    suspend fun sendMessage(model: SendTestMessageModel) {
-        hubConnection.invoke("OnMessage", model)
-    }
-
-    private fun onStartSocketConnection() {
-        hubConnection.start()
+    fun onStartSocketConnection(
+        socketConnectionLiveData: MutableLiveData<@SocketConnectionType Int>,
+        messagesLiveData: MutableLiveData<ArrayList<ChatItem>>
+    ) {
+        initHubConnection(socketConnectionLiveData,messagesLiveData)
+        openConnection()
     }
 
     fun onCloseSocketConnection() {
-        hubConnection.stop()
+        closeConnection()
     }
-
 }

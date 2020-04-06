@@ -19,14 +19,12 @@ abstract class BaseActivity<ACTIVITY_VIEW_MODEL : ViewModel> : AppCompatActivity
         super.onCreate(savedInstanceState)
         loadIntentExtras()
         loadData()
-        onCreateView()?.let {
-            setContentView(it)
-            setupView()
-        }
+        setContentView(onCreateView())
+        setupView()
     }
 
     @LayoutRes
-    abstract fun onCreateView(): Int?
+    abstract fun onCreateView(): Int
 
     abstract fun initActivityViewModel()
 

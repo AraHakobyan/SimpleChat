@@ -6,6 +6,6 @@ package am.simple.chat.app.chat.data.model;
  */
 public class SendTestMessageModel
 {
-    public int userId; // 1 or 2
+    public int userId;
     public String message;
 }

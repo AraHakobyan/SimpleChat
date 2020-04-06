@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">SimpleChat</string>
     <string name="messages">Messages</string>
+    <string name="hint_new_message">New message</string>
+    <string name="something_whent_wrong">Something went wrong, please try again</string>
+    <string name="ok">OK</string>
 </resources>

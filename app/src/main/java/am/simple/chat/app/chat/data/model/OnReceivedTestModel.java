@@ -6,6 +6,12 @@ package am.simple.chat.app.chat.data.model;
  */
 public class OnReceivedTestModel
 {
+
+    public OnReceivedTestModel(OnTestMessageModel data){
+        messageId = data.id;
+        userId = data.userId;
+    }
+
     public String messageId;
     public int userId;
 }
