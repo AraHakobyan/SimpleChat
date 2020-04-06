@@ -32,6 +32,7 @@ class ChatFragment : BaseFragment<ChatFragmentViewModel, ChatActivityViewModel>(
     }
 
     override fun initFragmentObservers() {
+        super.initFragmentObservers()
         fragmentViewModel.socketConnectionLiveData.observe(this, Observer {
             when(it) {
                 SocketConnectionType.CONNECTED -> btnSendMessage.visibility = View.VISIBLE

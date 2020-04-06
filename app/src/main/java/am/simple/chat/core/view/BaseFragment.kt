@@ -1,7 +1,9 @@
 package am.simple.chat.core.view
 
 import am.simple.chat.R
-import am.simple.chat.core.utils.EMPTY
+import am.simple.chat.core.data.model.ErrorModel
+import am.simple.chat.core.data.type.ErrorType
+import am.simple.chat.core.utils.hasInternetConnection
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
@@ -28,8 +30,8 @@ abstract class BaseFragment<F : BaseFragmentViewModel, A : ViewModel> : Fragment
 
     private var fragmentWasCreated: Boolean = false
 
-    lateinit var dialogBuilder: AlertDialog.Builder
-    lateinit var alertDialog: AlertDialog
+    private lateinit var dialogBuilder: AlertDialog.Builder
+    private lateinit var alertDialog: AlertDialog
 
     val baseActivity: BaseActivity<*>
         get() = requireActivity() as BaseActivity<*>
@@ -45,7 +47,11 @@ abstract class BaseFragment<F : BaseFragmentViewModel, A : ViewModel> : Fragment
         initActivityViewModel()
         initActivityObservers()
         initFragmentObservers()
-        initSocketConnection()
+        if (hasInternetConnection(context!!)) {
+            initSocketConnection()
+        } else {
+            fragmentViewModel.errorLiveData.postValue(ErrorModel(ErrorType.ERROR_TYPE_NO_INTERNET_CONNECTION))
+        }
     }
 
     override fun onCreateView(
@@ -71,26 +77,16 @@ abstract class BaseFragment<F : BaseFragmentViewModel, A : ViewModel> : Fragment
     }
 
     private fun showErrorDialog(
-        onPosBtnClicked: (() -> Unit)? = null,
-        onNegButtonClicked: (() -> Unit)? = null,
         errorMsgInfo: String? = resources.getString(R.string.something_whent_wrong),
-        posBtnText: String = resources.getString(R.string.ok),
-        negBtnText: String = EMPTY,
-        isCancelable: Boolean = false
+        posBtnText: String = resources.getString(R.string.ok)
     ) {
-        dialogBuilder
+        dialogBuilder = AlertDialog.Builder(this.context!!)
             .setMessage(errorMsgInfo ?: resources.getString(R.string.something_whent_wrong))
-            .setCancelable(isCancelable)
-        onNegButtonClicked?.let {
-            dialogBuilder.setNegativeButton(negBtnText) { _: DialogInterface?, _: Int ->
-                onNegButtonClicked.invoke()
+            .setCancelable(false)
+            .setPositiveButton(posBtnText) { _: DialogInterface?, _: Int ->
                 alertDialog.dismiss()
             }
-        }
-        dialogBuilder.setPositiveButton(posBtnText) { _: DialogInterface?, _: Int ->
-            onPosBtnClicked?.invoke()
-            alertDialog.dismiss()
-        }
+        alertDialog = dialogBuilder.create()
         dialogBuilder.show()
     }
 
@@ -113,7 +109,10 @@ abstract class BaseFragment<F : BaseFragmentViewModel, A : ViewModel> : Fragment
 
     open fun initFragmentObservers() {
         fragmentViewModel.errorLiveData.observe(this, Observer {
-            showErrorDialog(errorMsgInfo = it?.message)
+            showErrorDialog(errorMsgInfo = when(it.code){
+                ErrorType.ERROR_TYPE_NO_INTERNET_CONNECTION -> getString(R.string.no_internet_connection)
+                else -> it.message
+            })
         })
     }
 
