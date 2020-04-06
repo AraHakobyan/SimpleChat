@@ -1,9 +1,7 @@
 package am.simple.chat.app.chat.view.activiy
 
 import am.simple.chat.R
-import am.simple.chat.app.chat.view.activiy.ChatActivityViewModel
 import am.simple.chat.core.view.BaseActivity
-import android.os.Bundle
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 class ChatActivity : BaseActivity<ChatActivityViewModel>() {
@@ -14,7 +12,5 @@ class ChatActivity : BaseActivity<ChatActivityViewModel>() {
         viewModel = getViewModel()
     }
 
-    override fun setupView() {
-
-    }
+    override fun setupView() = Unit
 }

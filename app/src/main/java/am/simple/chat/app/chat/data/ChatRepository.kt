@@ -1,5 +1,6 @@
 package am.simple.chat.app.chat.data
 
+import am.simple.chat.app.chat.data.model.ChatItem
 import am.simple.chat.app.chat.data.network.ChatNetworkApi
 import am.simple.chat.core.data.type.SocketConnectionType
 import androidx.lifecycle.MutableLiveData
@@ -16,13 +17,15 @@ class ChatRepository(
 
     suspend fun getMessages() = chatApi.getMessages()
 
-    fun onStartSocketConnection(socketConnectionLiveData: MutableLiveData<@SocketConnectionType Int>) {
-        initHubConnection(socketConnectionLiveData)
+    fun onStartSocketConnection(
+        socketConnectionLiveData: MutableLiveData<@SocketConnectionType Int>,
+        messagesLiveData: MutableLiveData<ArrayList<ChatItem>>
+    ) {
+        initHubConnection(socketConnectionLiveData,messagesLiveData)
         openConnection()
     }
 
     fun onCloseSocketConnection() {
         closeConnection()
     }
-
 }

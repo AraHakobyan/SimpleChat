@@ -1,6 +1,5 @@
 package am.simple.chat.core.extensions
 
-import am.simple.chat.core.utils.EMPTY
 import androidx.appcompat.widget.AppCompatEditText
 
 /**

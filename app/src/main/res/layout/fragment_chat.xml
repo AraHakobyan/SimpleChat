@@ -41,5 +41,4 @@
         android:src="@drawable/ic_send_black_24dp"
         android:layout_width="@dimen/icon_size"
         android:layout_height="@dimen/icon_size" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

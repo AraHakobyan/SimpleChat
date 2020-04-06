@@ -8,7 +8,6 @@ import am.simple.chat.core.network.Output
 import am.simple.chat.core.utils.hasInternetConnection
 import kotlinx.coroutines.Dispatchers
 import retrofit2.Response
-import java.io.IOException
 import java.lang.Exception
 import androidx.lifecycle.*
 

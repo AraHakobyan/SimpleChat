@@ -9,7 +9,6 @@ import am.simple.chat.core.extensions.asString
 import am.simple.chat.core.network.Output
 import am.simple.chat.core.view.BaseFragment
 import android.view.View
-import android.widget.ArrayAdapter
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_chat.*

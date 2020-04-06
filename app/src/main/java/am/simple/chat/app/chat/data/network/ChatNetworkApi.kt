@@ -17,5 +17,4 @@ interface ChatNetworkApi {
     )
     @GET(NetworkConstants.GET_MESSAGES)
     suspend fun getMessages(): Response<ResponseModel<ChatModel>>
-
 }

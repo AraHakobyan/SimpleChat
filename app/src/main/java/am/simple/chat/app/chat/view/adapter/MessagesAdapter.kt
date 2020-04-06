@@ -12,14 +12,14 @@ import androidx.recyclerview.widget.RecyclerView
  * Created by Ara Hakobyan on 4/6/2020.
  * Company IDT
  */
-class MessagesAdapter(): RecyclerView.Adapter<MessagesAdapter.MessagesViewHolder>() {
+class MessagesAdapter: RecyclerView.Adapter<MessagesAdapter.MessagesViewHolder>() {
 
     var items: ArrayList<ChatItem>? = null
 
     inner class MessagesViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         private val messageTextView = itemView.findViewById<AppCompatTextView>(R.id.message_item_id)
         fun bindData(item: ChatItem) {
-            messageTextView.text = item.message
+            messageTextView.text = item.getText()
         }
     }
 

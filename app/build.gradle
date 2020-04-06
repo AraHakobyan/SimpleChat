@@ -41,14 +41,7 @@ ext {
     v_ktx = "1.2.0"
     v_navigation = "2.2.1"
     v_lifecycle = "2.2.0"
-    v_drawable = "1.1.0"
-    v_constraintlayout = "1.1.3"
-    v_material = "1.1.0"
-    v_appCompat = "1.1.0"
-    v_espresso = "3.2.0"
-    v_test_runner = "1.2.0"
     v_koin = "2.0.1"
-    v_corotines = "1.2.1"
     v_squareup = "2.6.2"
     v_squareup_logging = "4.2.0"
     v_scalars = "2.1.0"
@@ -87,9 +80,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata:$v_lifecycle"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$v_lifecycle"
 
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$v_coroutines}"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$v_coroutines"
 
     implementation "com.microsoft.signalr:signalr:$v_signalr"
-    implementation 'org.slf4j:slf4j-jdk14:1.7.25'
-    implementation 'org.conscrypt:conscrypt-android:2.2.1'
 }

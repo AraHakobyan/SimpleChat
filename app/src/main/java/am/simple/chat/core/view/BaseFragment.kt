@@ -1,22 +1,24 @@
 package am.simple.chat.core.view
 
+import am.simple.chat.R
+import am.simple.chat.core.utils.EMPTY
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 /**
  * Created by Ara Hakobyan on 4/4/2020.
  * Company IDT
  */
-abstract class BaseFragment<F : ViewModel, A : ViewModel> : Fragment() {
+abstract class BaseFragment<F : BaseFragmentViewModel, A : ViewModel> : Fragment() {
 
     lateinit var fragmentViewModel: F
 
@@ -26,7 +28,8 @@ abstract class BaseFragment<F : ViewModel, A : ViewModel> : Fragment() {
 
     private var fragmentWasCreated: Boolean = false
 
-    private var isVisibleToUser: Boolean = true
+    lateinit var dialogBuilder: AlertDialog.Builder
+    lateinit var alertDialog: AlertDialog
 
     val baseActivity: BaseActivity<*>
         get() = requireActivity() as BaseActivity<*>
@@ -67,13 +70,28 @@ abstract class BaseFragment<F : ViewModel, A : ViewModel> : Fragment() {
         fragmentView.run { }
     }
 
-    override fun setUserVisibleHint(isVisible: Boolean) {
-        super.setUserVisibleHint(isVisible)
-        isVisibleToUser = isVisible
-    }
-
-    protected fun showErrorDialog(message: String) {
-
+    private fun showErrorDialog(
+        onPosBtnClicked: (() -> Unit)? = null,
+        onNegButtonClicked: (() -> Unit)? = null,
+        errorMsgInfo: String? = resources.getString(R.string.something_whent_wrong),
+        posBtnText: String = resources.getString(R.string.ok),
+        negBtnText: String = EMPTY,
+        isCancelable: Boolean = false
+    ) {
+        dialogBuilder
+            .setMessage(errorMsgInfo ?: resources.getString(R.string.something_whent_wrong))
+            .setCancelable(isCancelable)
+        onNegButtonClicked?.let {
+            dialogBuilder.setNegativeButton(negBtnText) { _: DialogInterface?, _: Int ->
+                onNegButtonClicked.invoke()
+                alertDialog.dismiss()
+            }
+        }
+        dialogBuilder.setPositiveButton(posBtnText) { _: DialogInterface?, _: Int ->
+            onPosBtnClicked?.invoke()
+            alertDialog.dismiss()
+        }
+        dialogBuilder.show()
     }
 
     @LayoutRes
@@ -93,7 +111,11 @@ abstract class BaseFragment<F : ViewModel, A : ViewModel> : Fragment() {
 
     open fun initActivityObservers() = Unit
 
-    open fun initFragmentObservers() = Unit
+    open fun initFragmentObservers() {
+        fragmentViewModel.errorLiveData.observe(this, Observer {
+            showErrorDialog(errorMsgInfo = it?.message)
+        })
+    }
 
     abstract fun initSocketConnection()
 }

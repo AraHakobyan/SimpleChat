@@ -12,24 +12,27 @@ import androidx.lifecycle.MutableLiveData
  * Created by Ara Hakobyan on 4/4/2020.
  * Company IDT
  */
-class ChatFragmentViewModel(private val repository: ChatRepository,context: Context) : BaseFragmentViewModel(context) {
+class ChatFragmentViewModel(private val repository: ChatRepository, context: Context) : BaseFragmentViewModel(context) {
 
-    val socketConnectionLiveData = MutableLiveData<@SocketConnectionType Int>()
+    val socketConnectionLiveData = MutableLiveData<@SocketConnectionType Int>().also {
+        it.value = SocketConnectionType.DISCONNECTED
+    }
     val messagesLiveData = MutableLiveData<ArrayList<ChatItem>>()
 
-    fun getMessages() = executeBackendCall(call = { repository.getMessages()})
+    fun getMessages() = executeBackendCall(call = { repository.getMessages() })
 
     fun startSocket() {
-        repository.onStartSocketConnection(socketConnectionLiveData)
+        repository.onStartSocketConnection(socketConnectionLiveData, messagesLiveData)
     }
 
     fun sendMessage(text: String) {
+        if (!repository.isConnected) return
         val message = SendTestMessageModel().apply {
-            userId = 1
+            userId = 2
             message = text
         }
         repository.sendMessage(message)
-       addNewMessage(message)
+        addNewMessage(message)
     }
 
     private fun addNewMessage(message: SendTestMessageModel) {

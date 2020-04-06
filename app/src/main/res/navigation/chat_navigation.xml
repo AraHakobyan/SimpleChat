@@ -8,5 +8,4 @@
         android:name="am.simple.chat.app.chat.view.fragment.ChatFragment"
         android:label="ChatFragment"
         tools:layout="@layout/fragment_chat" />
-
 </navigation>

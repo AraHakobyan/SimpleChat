@@ -5,7 +5,6 @@ import com.microsoft.signalr.HubConnection
 import com.microsoft.signalr.HubConnectionBuilder
 import com.microsoft.signalr.TransportEnum
 
-
 /**
  * Created by Ara Hakobyan on 4/5/2020.
  * Company IDT
@@ -13,6 +12,7 @@ import com.microsoft.signalr.TransportEnum
 object SocketClientInstance {
     private const val TIMEOUT: Long = 2 * 60000
     private var hubConnection: HubConnection? = null
+
     val hubConnectionInstance: HubConnection
         get() {
             if (hubConnection == null) {
@@ -22,6 +22,5 @@ object SocketClientInstance {
                     .build()
             }
             return hubConnection!!
-
         }
 }

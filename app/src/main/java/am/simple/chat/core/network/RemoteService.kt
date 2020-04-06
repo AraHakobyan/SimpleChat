@@ -23,9 +23,7 @@ object RetrofitClientInstance {
             .readTimeout(TIMEOUT_MINUTES, TimeUnit.SECONDS)
             .connectTimeout(TIMEOUT_MINUTES, TimeUnit.SECONDS)
             .writeTimeout(TIMEOUT_MINUTES, TimeUnit.SECONDS)
-            .addInterceptor(HttpLoggingInterceptor().apply {
-                level =  HttpLoggingInterceptor.Level.BODY
-            }).build()
+            .build()
 
     val retrofitInstance: Retrofit
         get() {
@@ -39,5 +37,4 @@ object RetrofitClientInstance {
             }
             return retrofit!!
         }
-
 }
