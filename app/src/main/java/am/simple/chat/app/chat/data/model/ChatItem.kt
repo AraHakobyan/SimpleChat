@@ -18,10 +18,9 @@ data class ChatItem(
     @SerializedName("message")
     val message: String,
     @SerializedName("userId")
-    val userId: Int
+    val userId: Int,
+    var isSeen: Boolean = false
 ): Parcelable {
     constructor(chatItem: SendTestMessageModel): this(id = EMPTY, message = chatItem.message, userId = chatItem.userId)
     constructor(data: OnTestMessageModel) : this(id = data.id, message = data.message, userId = data.userId)
-
-    fun getText() = "$message $userId"
 }

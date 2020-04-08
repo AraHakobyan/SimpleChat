@@ -4,7 +4,7 @@ import am.simple.chat.core.view.BaseFragmentViewModel
 import android.content.Context
 
 /**
- * Created by Ara Hakobyan on 4/4/2020.
+ * Created by Ara Hakobyan on 4/8/2020.
  * Company IDT
  */
-class ChatFragmentViewModel(context: Context) : BaseFragmentViewModel(context)
+class SelectUserFragmentViewModel(context: Context) : BaseFragmentViewModel(context)

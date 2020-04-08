@@ -1,9 +1,7 @@
 package am.simple.chat.core.view
 
 import am.simple.chat.R
-import am.simple.chat.core.data.model.ErrorModel
 import am.simple.chat.core.data.type.ErrorType
-import am.simple.chat.core.utils.hasInternetConnection
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
@@ -14,13 +12,12 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 
 /**
  * Created by Ara Hakobyan on 4/4/2020.
  * Company IDT
  */
-abstract class BaseFragment<F : BaseFragmentViewModel, A : ViewModel> : Fragment() {
+abstract class BaseFragment<F : BaseFragmentViewModel, A : BaseActivityViewModel> : Fragment() {
 
     lateinit var fragmentViewModel: F
 
@@ -43,15 +40,10 @@ abstract class BaseFragment<F : BaseFragmentViewModel, A : ViewModel> : Fragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        loadIntentExtras()
         initActivityViewModel()
         initActivityObservers()
+        loadIntentExtras()
         initFragmentObservers()
-        if (hasInternetConnection(context!!)) {
-            initSocketConnection()
-        } else {
-            fragmentViewModel.errorLiveData.postValue(ErrorModel(ErrorType.ERROR_TYPE_NO_INTERNET_CONNECTION))
-        }
     }
 
     override fun onCreateView(
@@ -77,11 +69,11 @@ abstract class BaseFragment<F : BaseFragmentViewModel, A : ViewModel> : Fragment
     }
 
     private fun showErrorDialog(
-        errorMsgInfo: String? = resources.getString(R.string.something_whent_wrong),
+        errorMsgInfo: String? = resources.getString(R.string.something_went_wrong),
         posBtnText: String = resources.getString(R.string.ok)
     ) {
         dialogBuilder = AlertDialog.Builder(this.context!!)
-            .setMessage(errorMsgInfo ?: resources.getString(R.string.something_whent_wrong))
+            .setMessage(errorMsgInfo ?: resources.getString(R.string.something_went_wrong))
             .setCancelable(false)
             .setPositiveButton(posBtnText) { _: DialogInterface?, _: Int ->
                 alertDialog.dismiss()
@@ -108,13 +100,11 @@ abstract class BaseFragment<F : BaseFragmentViewModel, A : ViewModel> : Fragment
     open fun initActivityObservers() = Unit
 
     open fun initFragmentObservers() {
-        fragmentViewModel.errorLiveData.observe(this, Observer {
+        activityViewModel.errorLiveData.observe(this, Observer {
             showErrorDialog(errorMsgInfo = when(it.code){
                 ErrorType.ERROR_TYPE_NO_INTERNET_CONNECTION -> getString(R.string.no_internet_connection)
                 else -> it.message
             })
         })
     }
-
-    abstract fun initSocketConnection()
 }
