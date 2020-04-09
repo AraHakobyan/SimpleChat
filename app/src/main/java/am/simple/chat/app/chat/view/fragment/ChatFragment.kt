@@ -32,7 +32,6 @@ class ChatFragment : BaseFragment<ChatFragmentViewModel, ChatActivityViewModel>(
     }
 
     override fun initActivityObservers() {
-        super.initActivityObservers()
         activityViewModel.socketConnectionLiveData.observe(this, Observer(::socketConnectionChanged))
         activityViewModel.messageSeenLiveData.observe(this, Observer(::notifyMessageSeen))
         activityViewModel.newMessageLiveData.observe(this, Observer(::notifyNewMessageReceived))
