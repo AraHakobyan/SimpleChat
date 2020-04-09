@@ -57,7 +57,6 @@ abstract class BaseFragment<F : BaseFragmentViewModel, A : BaseActivityViewModel
             setupOnViewClicked()
         }
         fragmentWasCreated = true
-        fragmentView.run { }
     }
 
     @LayoutRes
