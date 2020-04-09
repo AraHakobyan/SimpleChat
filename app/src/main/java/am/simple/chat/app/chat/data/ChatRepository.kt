@@ -1,6 +1,7 @@
 package am.simple.chat.app.chat.data
 
 import am.simple.chat.app.chat.data.model.ChatItem
+import am.simple.chat.app.chat.data.model.OnReceivedTestModel
 import am.simple.chat.app.chat.data.network.ChatNetworkApi
 import am.simple.chat.core.data.type.SocketConnectionType
 import androidx.lifecycle.MutableLiveData
@@ -19,9 +20,10 @@ class ChatRepository(
 
     fun onStartSocketConnection(
         socketConnectionLiveData: MutableLiveData<@SocketConnectionType Int>,
-        messagesLiveData: MutableLiveData<ArrayList<ChatItem>>
+        messageSeenLiveData: MutableLiveData<OnReceivedTestModel>,
+        newMessageLiveData: MutableLiveData<ChatItem>
     ) {
-        initHubConnection(socketConnectionLiveData,messagesLiveData)
+        initHubConnection(socketConnectionLiveData, messageSeenLiveData, newMessageLiveData)
         openConnection()
     }
 

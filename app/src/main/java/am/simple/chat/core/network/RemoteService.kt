@@ -2,7 +2,6 @@ package am.simple.chat.core.network
 
 import am.simple.chat.core.constants.NetworkConstants.Companion.BASE_URL
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory

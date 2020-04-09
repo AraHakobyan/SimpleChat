@@ -1,44 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:animateLayoutChanges="true"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:background="@color/hintBackground"
+    android:animateLayoutChanges="true">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/messagesRV"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_margin="@dimen/margin_normal"
         android:overScrollMode="never"
         android:scrollbars="none"
-        android:layout_margin="@dimen/margin_normal"
+        android:background="@color/hintBackground"
         app:layout_constraintBottom_toTopOf="@+id/editMessage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:itemCount="1"
-        tools:listitem="@layout/chat_list_item" />
+        tools:itemCount="3"
+        tools:listitem="@layout/messages_item_layout_by_me" />
 
     <androidx.appcompat.widget.AppCompatEditText
-        app:layout_constraintStart_toStartOf="parent"
+        android:id="@+id/editMessage"
+        style="@style/EditTextStyle"
+        android:layout_width="0dp"
+        android:layout_margin="@dimen/margin_normal"
+        android:hint="@string/hint_new_message"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/btnSendMessage"
-        android:layout_margin="@dimen/margin_normal"
-        android:id="@+id/editMessage"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="@string/hint_new_message"
-        tools:text="@string/hint_new_message"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.appcompat.widget.AppCompatImageView
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/editMessage"
+        android:id="@+id/btnSendMessage"
+        android:layout_width="@dimen/icon_size"
+        android:layout_height="@dimen/icon_size"
         android:layout_marginStart="@dimen/margin_normal"
         android:layout_marginEnd="@dimen/margin_normal"
-        android:visibility="gone"
-        android:id="@+id/btnSendMessage"
         android:src="@drawable/ic_send_black_24dp"
-        android:layout_width="@dimen/icon_size"
-        android:layout_height="@dimen/icon_size" />
+        android:tint="@color/colorAccent"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@id/editMessage"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

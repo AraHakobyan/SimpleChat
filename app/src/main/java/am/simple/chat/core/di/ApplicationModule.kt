@@ -4,6 +4,7 @@ import am.simple.chat.app.chat.data.network.ChatNetworkApi
 import am.simple.chat.app.chat.data.ChatRepository
 import am.simple.chat.app.chat.view.activiy.ChatActivityViewModel
 import am.simple.chat.app.chat.view.fragment.ChatFragmentViewModel
+import am.simple.chat.app.chat.view.fragment.SelectUserFragmentViewModel
 import am.simple.chat.core.network.RetrofitClientInstance
 import am.simple.chat.core.network.SocketClientInstance
 import com.google.gson.Gson
@@ -45,10 +46,13 @@ object ApplicationModule {
 
     private val viewModelModule = module {
         viewModel {
-            ChatActivityViewModel(androidContext())
+            ChatActivityViewModel(get(),androidContext())
         }
         viewModel {
-            ChatFragmentViewModel(get(), androidContext())
+            ChatFragmentViewModel(androidContext())
+        }
+        viewModel {
+            SelectUserFragmentViewModel(get())
         }
     }
 

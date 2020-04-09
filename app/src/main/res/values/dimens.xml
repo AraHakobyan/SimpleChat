@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="margin_small">8dp</dimen>
     <dimen name="margin_normal">16dp</dimen>
-    <dimen name="icon_size">48dp</dimen>
+    <dimen name="margin_big">32dp</dimen>
+    <dimen name="chat_item_margin">60dp</dimen>
+
+    <dimen name="padding_normal">8dp</dimen>
+    <dimen name="padding_small">4dp</dimen>
+
+    <dimen name="icon_size">38dp</dimen>
+    <dimen name="rounded_corners_size">22dp</dimen>
+    <dimen name="chat_item_min_width">70dp</dimen>
+
+    <dimen name="text_size_special">22sp</dimen>
+    <dimen name="text_size_chat">16sp</dimen>
+    <dimen name="text_size_small">12sp</dimen>
+    <dimen name="divider_size">1.5dp</dimen>
 </resources>

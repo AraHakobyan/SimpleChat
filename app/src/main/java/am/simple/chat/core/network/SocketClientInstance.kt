@@ -10,14 +10,14 @@ import com.microsoft.signalr.TransportEnum
  * Company IDT
  */
 object SocketClientInstance {
-    private const val TIMEOUT: Long = 2 * 60000
+    private const val TIMEOUT: Long = 5 * 60000
     private var hubConnection: HubConnection? = null
 
     val hubConnectionInstance: HubConnection
         get() {
             if (hubConnection == null) {
                 hubConnection = HubConnectionBuilder.create(NetworkConstants.BASE_URL + "hubs/test")
-                    .withTransport(TransportEnum.WEBSOCKETS)
+                    .withTransport(TransportEnum.ALL)
                     .withHandshakeResponseTimeout(TIMEOUT)
                     .build()
             }

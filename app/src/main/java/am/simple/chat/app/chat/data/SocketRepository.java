@@ -1,9 +1,11 @@
 package am.simple.chat.app.chat.data;
 import androidx.lifecycle.MutableLiveData;
+
 import com.microsoft.signalr.HubConnection;
 import com.microsoft.signalr.HubConnectionState;
+
 import org.jetbrains.annotations.NotNull;
-import java.util.ArrayList;
+
 import am.simple.chat.app.chat.data.model.ChatItem;
 import am.simple.chat.app.chat.data.model.OnReceivedTestModel;
 import am.simple.chat.app.chat.data.model.OnTestMessageModel;
@@ -29,33 +31,44 @@ public class SocketRepository {
     }
 
     protected void openConnection() {
-        hubConnection.start().blockingAwait();
+        hubConnection.start();
     }
 
     public void sendMessage(SendTestMessageModel model) {
         hubConnection.invoke(SOCKET_SEND_MESSAGE, model);
     }
 
-    protected void initHubConnection(MutableLiveData<Integer> socketConnectionLiveData, MutableLiveData<ArrayList<ChatItem>> messagesLiveData) {
-        hubConnection.on(SOCKET_CONNECT,(isConnected) -> {
-            socketConnectionLiveData.postValue(isConnected ? SocketConnectionType.CONNECTED : SocketConnectionType.UNDEFINED);
-        }, Boolean.class);
-        hubConnection.on(SOCKET_RECEIVE_MESSAGE_FROM_OTHER_USER,(data) -> {
-                messageReceived(new OnReceivedTestModel(data));
-                addMessage(messagesLiveData, data);
-        }, OnTestMessageModel.class);
-        hubConnection.on(SOCKET_CLIENT_RECEIVE_THE_MESSAGE,(data) -> { }, OnReceivedTestModel.class);
-        hubConnection.onClosed(exception -> socketConnectionLiveData.postValue(SocketConnectionType.UNDEFINED));
+    protected void initHubConnection(MutableLiveData<Integer> socketConnectionLiveData,
+                                     MutableLiveData<OnReceivedTestModel> messageSeenLiveData, MutableLiveData<ChatItem> newMessageLiveData) {
+        hubConnection.on(SOCKET_CONNECT, (isConnected) -> connectionChanged(isConnected, socketConnectionLiveData), Boolean.class);
+        hubConnection.on(SOCKET_RECEIVE_MESSAGE_FROM_OTHER_USER, (data) -> newMessageReceived(data, newMessageLiveData), OnTestMessageModel.class);
+        hubConnection.on(SOCKET_CLIENT_RECEIVE_THE_MESSAGE, (data) -> myMessageReceived(data, messageSeenLiveData), OnReceivedTestModel.class);
+        hubConnection.onClosed(exception -> connectionClosed(socketConnectionLiveData));
     }
 
-    private void addMessage(MutableLiveData<ArrayList<ChatItem>> messagesLiveData, OnTestMessageModel data){
-        ArrayList<ChatItem> list = messagesLiveData.getValue();
-        if (list == null) list = new ArrayList<>();
-        list.add(new ChatItem(data));
-        messagesLiveData.postValue(list);
+    private void connectionChanged(Boolean isConnected, MutableLiveData<Integer> socketConnectionLiveData) {
+        socketConnectionLiveData.postValue(isConnected ? SocketConnectionType.CONNECTED : SocketConnectionType.UNDEFINED);
     }
 
-    private void messageReceived(OnReceivedTestModel model){
+    /**
+     * Received message from other user
+     */
+    private void newMessageReceived(OnTestMessageModel data, MutableLiveData<ChatItem> newMessageLiveData) {
+        messageReceived(new OnReceivedTestModel(data));
+        newMessageLiveData.postValue(new ChatItem(data));
+    }
+    /**
+     * My message has is seen by other
+     */
+    private void myMessageReceived(OnReceivedTestModel data, MutableLiveData<OnReceivedTestModel> messageSeenLiveData) {
+        messageSeenLiveData.postValue(data);
+    }
+
+    private void connectionClosed(MutableLiveData<Integer> socketConnectionLiveData){
+        socketConnectionLiveData.postValue(SocketConnectionType.UNDEFINED);
+    }
+
+    private void messageReceived(OnReceivedTestModel model) {
         hubConnection.invoke(SOCKET_NOTIFY_MESSAGE_RECEIVED, model);
     }
 

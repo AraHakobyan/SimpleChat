@@ -2,10 +2,22 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/chatFragment">
+    app:startDestination="@id/selectUserFragment">
 
     <fragment android:id="@+id/chatFragment"
         android:name="am.simple.chat.app.chat.view.fragment.ChatFragment"
         android:label="ChatFragment"
         tools:layout="@layout/fragment_chat" />
+
+    <fragment android:id="@+id/selectUserFragment"
+        android:name="am.simple.chat.app.chat.view.fragment.SelectUserFragment"
+        android:label="SelectUserFragment"
+        tools:layout="@layout/select_user_fragment">
+        <action android:id="@+id/toChatFragment"
+            app:destination="@id/chatFragment"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_to_left"
+            app:popEnterAnim="@anim/slide_in_from_left"
+            app:popExitAnim="@anim/slide_out_to_right"/>
+    </fragment>
 </navigation>
